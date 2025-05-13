@@ -1,0 +1,20 @@
+
+Call:
+lm(formula = wa_b ~ gva_ind_be, data = inddata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-300.79 -117.21  -70.08   34.72  590.24 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 17.57792   40.55423   0.433    0.665    
+gva_ind_be   0.27336    0.06608   4.137 6.45e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 190.4 on 124 degrees of freedom
+  (12 observations deleted due to missingness)
+Multiple R-squared:  0.1213,	Adjusted R-squared:  0.1142 
+F-statistic: 17.11 on 1 and 124 DF,  p-value: 6.451e-05
+

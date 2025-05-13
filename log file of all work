@@ -1,0 +1,195 @@
+import R script given by Simon (Dataset name = inddata)
+This file already had all the values form 2004 - 2019 aggregated and merged with GVA.
+
+I started preprocessing where I cleaned and filled missing vlaues steps as follows
+  Replace the - with a 0
+  Replacing "."  values using the mean imputation method
+    Mean imputation of wa was done based on bet_no (no of companies)
+    
+Running the panel regression on the dataset (Dataset name = pdata)
+  Did botth a fixed effects and random effects model
+  Hausmann test was done to select the suitable model and hence
+    the Random effect model was selected. (Results in Panel regression RE model.txt)
+
+Since the RE model results are not statistically significant,
+  the combination of the variables doesn't strongly predict water consumption.
+  
+Therefore as additional steps planning to perfom a 
+  1. Panel VAR (Vector Autoregression) as,
+      VAR model could relate water consumption (wa), temperature (mean_temp), 
+      and number of companies (bet_no), capturing the dynamics between them over time.
+      
+  
+  gva and no of companies - take out no of companies and look only at gva. 
+  lets look more into scenarios for instance in GDp growth in thuringia. Economic development scenarios
+  prediction with different income scenarios.
+  efficiency of water use ~ maybe a research topic - will efficiency grow in future or not.
+  
+  make a report of the results and forecasting and why we rather use scenarios and predictions rather than forecastings. 
+  do some research on downscaling german gdp scenarios to kreis level gdp and how to do that. 
+  *** open a git repo for this project and share. to simon
+  writng down a report of what ive done so far. as a first report (status report).
+  
+  1. report deadline next week
+  2. scenario analysis.
+  
+  Currently claculating TC using various methods
+  
+  best approach as per now is using the multiple and circular water uses as TC proxies
+  
+   ##### RESULTS OF THE LINEAR REGRESSION WITH DIFFERENT WATER USE ONE, MULTI, CIRC DIRECTLY AS TC PROXY #####
+Call:
+lm(formula = wa ~ log_gva + mean_temp + one + multi + circ, data = inddata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4129.4  -350.4  -218.0  -120.8 10968.2 
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 1764.64510 2812.93971   0.627    0.532    
+log_gva     -190.94616  422.43021  -0.452    0.652    
+mean_temp    -53.87777  196.64541  -0.274    0.785    
+one            1.05504    0.05395  19.555  < 2e-16 ***
+multi          1.42858    0.15867   9.003 1.63e-14 ***
+circ           1.48249    0.22546   6.575 2.30e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1640 on 99 degrees of freedom
+  (33 observations deleted due to missingness)
+Multiple R-squared:  0.8666,	Adjusted R-squared:  0.8599 
+F-statistic: 128.7 on 5 and 99 DF,  p-value: < 2.2e-16
+
+
+##### PANEL REGRESSION
+
+
+
+
+
+Discussion
+we are interested in increase of circular use over time 
+there must be a simple growth function explains circular water use over the time using the time series scale to estimate to all kreis
+then we do it separately and derive a change factor ~ water use gonna grow by xxx amount but water withdrawals gonna increase nnot as fast in that rate because circular water use is also increasing
+
+so we make two models
+1. to determine the TC as a factor and then use it in the main model.
+
+plot the time series of all water use values and then get a gradient of them and se if it works as a TC parameter
+
+
+
+BASELINE YEAR METHOD (Florke 2015)
+
+we take a mean vsalue for eg 2005 and then takee the GVA of that year and then we say how much higher is the gva in the other years and then see it as a factor
+
+
+First thing to do 
+send the sources of TC calculation to SImon
+And the things above (looking into a growth function for TC and a graphical explanation)
+Writing on the things we have done so far
+Integrating space year
+
+
+I calculated the TC in two ways and the constant TC seemed reliable (see expl. 
+in the written doc) and I added it as a constant to all values for all KReis for all years
+but it drops out when I run any plm fucntion (panel regression models)
+
+
+Added the cooling water to the dataset and checked it with mean temp _cooling ~ mean_temp). But no significant regression was observed among the variables.
+
+
+Relative circular water use. % of total water use.
+
+total water use and water withdrawals; differentiate this. The TC is important because it defines how much water is withdrawn.
+First is calculate the % of circulat water use that of total water use (not water withdrawals)
+Then calculate the growth rate for that percentage. Because that directly implies how much technological change happened in water technology.
+
+
+Draw a trend graph for the three water uses..... refer the freeform sketch by Simon
+
+For now
+seperate the TC calculation part
+Run the model with log_gva and mean temp and intepret
+we run with fixed effevts as we can't deal with specificities of the Kreis
+With random.....
+
+Make a presnetation with the structure we were talking about
+Let it be the first product
+explain what i have done step by step in it for the PP and Bernd and Klassert
+
+
+Base year calculation. - pending ?????
+
+
+After the last meetings we agreed on the followings
+1. Create three separate models
+1.1 Main model about IWD
+1.2 Cooling water model (Cooling water ~ climate elasticity) [DONE: But has no significance]
+1.3 Water use model (Circular vs other types)
+
+Task 1: Clean water use data (Kreis level), normalize it and find trends and try to extract water use from it [?]
+Task 2: Import the weather data "kreis_weather-industry.rds" and use the other climate variables [DONE]
+Task 3: Rerun the models with these data [Ran the cooling model]
+
+Issues: how to calculate the total water use? and what happens to the unused water? 
+        do we need to link the three models to each other?
+        the no of times water used, doesnt make sense in kreis leel as some kreis doesn't have all three
+        but the aggregated on looks good. so what to do about that?
+
+Note: Ask about a template for the final report from Simon: write like a scientific paper - not like a report
+ Structure; 6-10 pages
+  Introduction into what we are doing
+  Conceptual framework of the model
+  Explain the datasource, descriptive stats (sing water use, etc)
+  Discuss about the regression mdoel (mathematical representation)
+  Discuss the regression results
+  Scenario simulations***** 
+          
+        ### IMPORTANT TASKS ####
+        ****Split the data into two using circular vs on circular, if there is no diff between them, use the overall dataset.
+        ****check each climate var separately
+
+Since there are no specif studies on how much water use is "low circular water use", 
+I am assuming if the sing:total ratio of a certain year is >90%, then the it has higher singular water use.
+
+Also checking with an annual aggregate...
+
+The outcome of this should be, we divide the inndata into two subsets where 
+  1. Kreis with higher singular water use
+  2. Kreis with higher circular water use
+And then we test both of them in the IWW model seperately and see if there is a different between the results in them.
+
+Low Circular Kreis: aggregated and 75% or more singular use
+ Hildburghausen, Stadt Suhl, Stadt Weimar, Unstrut0Hainich-Kreis, Wartburgkreis, Weimarer Land 
+
+Creating a subset with these Kreis and another without them. [DONE]
+
+
+New final list of work after final discussion with simon [12.03.2025]
+Base year 2004 [DONE]
+Dependent = Log_wa [DONE]
+Check all the above models with the base year [DONE]
+Standardize the log_gva for this year, then we look at the change of gva from this year onwards [DONE]
+Mean log gva in 2005 [DONE]
+Kreis fixed effects. For all models [DONE]
+Also check cooling models again in multiple regression with taking log gva as well in both cases, original  [DONE]
+                                       and base year [climate data availability from 2011 onwards]
+                                       
+Write down the full methodology, main steps and data types and other stuff we discussed (descriptive stats)
+Check the distribution of GVA
+Trend analysis of GVA 
+
+[METHOD]
+We take the 2004 as the base year for the log_gva and then standardize all the log-gva values based on that year by substracting the log-gva of every year for every Kreis separately and then use it as a standardized log gva variable.
+Then we test it across all the above models and see if it is more interpretable than what we already have.
+
+[FOR THE COOLING MODELS]
+We do the same as WA; the method with the base year, but instead of 2004 we use 2010 because that is the latest year in that dataset.
+because of the clinmate variables which are available only from 2011
+
+
+# create a histogram for the GVA dist also.
+# paper submit by 25th March
+

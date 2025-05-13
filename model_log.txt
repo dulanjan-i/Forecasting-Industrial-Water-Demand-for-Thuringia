@@ -1,0 +1,24 @@
+Oneway (individual) effect Within Model
+
+Call:
+plm(formula = log_wa_b ~ log_gva + mean_temp, data = inddata, 
+    model = "within", index = c("Kreis"))
+
+Unbalanced Panel: n = 23, T = 2-6, N = 126
+
+Residuals:
+     Min.   1st Qu.    Median   3rd Qu.      Max. 
+-0.927258 -0.150334  0.012629  0.151469  0.825653 
+
+Coefficients:
+           Estimate Std. Error t-value  Pr(>|t|)    
+log_gva    0.592059   0.160988  3.6777 0.0003794 ***
+mean_temp -0.073492   0.036091 -2.0363 0.0443405 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Total Sum of Squares:    9.806
+Residual Sum of Squares: 8.6477
+R-Squared:      0.11812
+Adj. R-Squared: -0.091434
+F-statistic: 6.76412 on 2 and 101 DF, p-value: 0.0017504

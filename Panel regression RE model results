@@ -1,0 +1,111 @@
+Panel regression
+random effect model results
+
+Oneway (individual) effect Random Effect Model 
+   (Swamy-Arora's transformation)
+
+Call:
+plm(formula = wa ~ bet_no + mean_temp + gva_ind_be + log_gva, 
+    data = pdata, model = "random")
+
+Unbalanced Panel: n = 23, T = 5-6, N = 135
+
+Effects:
+                   var  std.dev share
+idiosyncratic  1810799     1346 0.117
+individual    13717073     3704 0.883
+theta:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.8396  0.8533  0.8533  0.8518  0.8533  0.8533 
+
+Residuals:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-5391.2  -465.3  -238.0     1.9   114.4  7756.2 
+
+Coefficients:
+               Estimate  Std. Error z-value Pr(>|z|)
+(Intercept) -4371.48514  7469.60541 -0.5852   0.5584
+bet_no         61.79504    40.54592  1.5241   0.1275 
+mean_temp     -55.11590   155.69058 -0.3540   0.7233
+gva_ind_be      0.50756     2.50717  0.2024   0.8396
+log_gva      1056.64546  1426.35555  0.7408   0.4588
+
+Total Sum of Squares:    248100000
+Residual Sum of Squares: 232040000
+R-Squared:      0.064733
+Adj. R-Squared: 0.035956
+Chisq: 9.26734 on 4 DF, p-value: 0.054754
+
+
+####### Final panel ########
+
+fe_model <- plm(wa ~ log_gva, 
++                 data = pdata, 
++                 model = "within")
+> summary(fe_model)
+Oneway (individual) effect Within Model
+
+Call:
+plm(formula = wa ~ log_gva, data = pdata, model = "within")
+
+Unbalanced Panel: n = 23, T = 5-6, N = 135
+
+Residuals:
+     Min.   1st Qu.    Median   3rd Qu.      Max. 
+-6140.434  -201.614    28.389   222.495  6982.252 
+
+Coefficients:
+        Estimate Std. Error t-value Pr(>|t|)  
+log_gva   1177.9      596.5  1.9748  0.05078 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Total Sum of Squares:    204530000
+Residual Sum of Squares: 197590000
+R-Squared:      0.03394
+Adj. R-Squared: -0.16623
+F-statistic: 3.89966 on 1 and 111 DF, p-value: 0.050779
+> #random effect model
+> re_model <- plm(wa ~ log_gva, 
++                 data = pdata, model = "random")
+> summary(re_model)
+Oneway (individual) effect Random Effect Model 
+   (Swamy-Arora's transformation)
+
+Call:
+plm(formula = wa ~ log_gva, data = pdata, model = "random")
+
+Unbalanced Panel: n = 23, T = 5-6, N = 135
+
+Effects:
+                   var  std.dev share
+idiosyncratic  1780083     1334 0.121
+individual    12983406     3603 0.879
+theta:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.8366  0.8505  0.8505  0.8490  0.8505  0.8505 
+
+Residuals:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-5029.0  -472.3  -207.4     2.6   165.8  7932.5 
+
+Coefficients:
+            Estimate Std. Error z-value Pr(>|z|)   
+(Intercept) -6208.02    3516.86 -1.7652  0.07753 . 
+log_gva      1476.32     556.58  2.6525  0.00799 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Total Sum of Squares:    249750000
+Residual Sum of Squares: 237670000
+R-Squared:      0.048351
+Adj. R-Squared: 0.041196
+Chisq: 7.03564 on 1 DF, p-value: 0.0079903
+> hausman_test <- phtest(fe_model, re_model)
+> print(hausman_test)
+
+	Hausman Test
+
+data:  wa ~ log_gva
+chisq = 1.9344, df = 1, p-value = 0.1643
+alternative hypothesis: one model is inconsistent

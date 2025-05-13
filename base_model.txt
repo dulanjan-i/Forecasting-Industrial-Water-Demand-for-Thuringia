@@ -1,0 +1,21 @@
+Oneway (individual) effect Within Model
+
+Call:
+plm(formula = wa_b ~ gva_ind_be, data = inddata, model = "within", 
+    index = c("Kreis"))
+
+Unbalanced Panel: n = 23, T = 2-6, N = 126
+
+Residuals:
+      Min.    1st Qu.     Median    3rd Qu.       Max. 
+-321.73212  -11.40860   -0.33998   11.35442  295.80040 
+
+Coefficients:
+           Estimate Std. Error t-value Pr(>|t|)
+gva_ind_be 0.064430   0.055105  1.1692    0.245
+
+Total Sum of Squares:    501010
+Residual Sum of Squares: 494380
+R-Squared:      0.013226
+Adj. R-Squared: -0.20928
+F-statistic: 1.3671 on 1 and 102 DF, p-value: 0.24504
